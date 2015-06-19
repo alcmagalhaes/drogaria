@@ -10,7 +10,9 @@ tmp/
 local.properties
 .settings/
 .loadpath
-.build/
+
+# Build directory
+build/
 
 # Eclipse Core
 .project

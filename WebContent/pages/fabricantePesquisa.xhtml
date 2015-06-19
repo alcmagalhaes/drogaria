@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/templates/modeloGeral.xhtml">
+
+	<ui:define name="metaData">
+		<f:metadata>
+			<f:event listener="#{fabricanteBean.carregarPesquisa}"
+				type="preRenderView" />
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form>
+
+			<p:toolbar>
+				<f:facet name="left">
+					<h:outputText value="Listagem de Fabricantes" />
+				</f:facet>
+			</p:toolbar>
+
+			<!-- var é um cursor (iterador) -->
+			<p:dataTable emptyMessage="Nenhum registro encontrado."
+				value="#{fabricanteBean.fabricantes}"
+				filteredValue="#{fabricanteBean.fabricantesFiltrados}"
+				var="fabricante" rows="10" paginator="true">
+
+				<f:facet name="footer">
+					<p:button value="Novo"
+						outcome="/pages/fabricanteCadastro.xhtml">
+						<f:param name="fabAcao" value="novo" />
+					</p:button>						
+				</f:facet>
+
+				<p:column headerText="Código">
+					<h:outputText value="#{fabricante.codigo}" />
+				</p:column>
+
+				<p:column headerText="Descrição" filterBy="#{fabricante.descricao}"
+					sortBy="#{fabricante.descricao}">
+					<h:outputText value="#{fabricante.descricao}" />
+				</p:column>
+
+				<p:column headerText="Opções">
+					<p:button value="Editar"
+						outcome="/pages/fabricanteCadastro.xhtml">
+						<f:param name="fabAcao" value="editar" />
+						<f:param name="fabCodigo" value="#{fabricante.codigo}" />
+					</p:button>
+					
+					<p:button value="Excluir"
+						outcome="/pages/fabricanteCadastro.xhtml">
+						<f:param name="fabAcao" value="excluir" />
+						<f:param name="fabCodigo" value="#{fabricante.codigo}" />
+					</p:button>
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>
