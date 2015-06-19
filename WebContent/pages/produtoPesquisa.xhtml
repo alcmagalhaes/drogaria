@@ -6,58 +6,73 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-	<ui:composition template="/templates/modeloGeral.xhtml">
-		<ui:define name="conteudo">
-	
-			<h:form>
-	
-				<p:toolbar>
-					<f:facet name="left">
-						<h:outputText value="Listagem de Produtos" />
-					</f:facet>
-				</p:toolbar>
-	
-				<h:panelGrid columns="6">
-	
-					<p:outputLabel value="Descrição: " />
-					<p:inputText size="30" maxlength="50" />
-	
-					<p:outputLabel value="Preço: " />
-					<p:inputText  size="10" maxlength="7"/>
-	
-					<p:outputLabel value="Fabricante: " />
-					<p:inputText size="30" maxlength="50" />
-	
-				</h:panelGrid>
-	
-				<h:panelGrid columns="2">
-					<p:commandButton value="Buscar" />
-					<p:commandButton value="Novo"
-						action="/pages/produtoCadastro.xhtml?faces-redirect=true" />
-				</h:panelGrid>
-	
-	
-				<p:dataTable emptyMessage="Nenhum registro encontrado.">
-	
-					<p:column headerText="Código">
-					</p:column>
-	
-					<p:column headerText="Descrição">
-					</p:column>
-	
-					<p:column headerText="Preço">
-					</p:column>
-	
-					<p:column headerText="Quantidade">
-					</p:column>
-	
-					<p:column headerText="Fabricante">
-					</p:column>
-	
-				</p:dataTable>
-			</h:form>
-	
-		</ui:define>
-	</ui:composition>
+<ui:composition template="/templates/modeloGeral.xhtml">
+
+	<ui:define name="metaData">
+		<f:metadata>
+			<f:event listener="#{produtoBean.carregarPesquisa}"
+				type="preRenderView" />
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form>
+
+			<p:toolbar>
+				<f:facet name="left">
+					<h:outputText value="Listagem de Fabricantes" />
+				</f:facet>
+			</p:toolbar>
+
+			<!-- var é um cursor (iterador) -->
+			<p:dataTable emptyMessage="Nenhum registro encontrado."
+				value="#{produtoBean.produtos}"
+				filteredValue="#{produtoBean.produtosFiltrados}" var="produto"
+				rows="10" paginator="true">
+
+				<f:facet name="footer">
+					<p:button value="Novo" outcome="/pages/produtoCadastro.xhtml">
+						<f:param name="prodAcao" value="novo" />
+					</p:button>
+				</f:facet>
+
+				<p:column headerText="Código">
+					<h:outputText value="#{produto.codigo}" />
+				</p:column>
+
+				<p:column headerText="Descrição" filterBy="#{produto.descricao}"
+					sortBy="#{produto.descricao}">
+					<h:outputText value="#{produto.descricao}" />
+				</p:column>
+
+				<p:column headerText="Preço" sortBy="#{produto.preco}">
+					<h:outputText value="#{produto.preco}" />
+				</p:column>
+
+				<p:column headerText="Quantidade" sortBy="#{produto.quantidade}">
+					<h:outputText value="#{produto.quantidade}" />
+				</p:column>
+
+				<p:column headerText="Fabricante" filterBy="#{produto.fabricante}"
+					sortBy="#{produto.fabricante}">
+					<h:outputText value="#{produto.fabricante}" />
+				</p:column>
+
+				<p:column headerText="Opções">
+					<p:button value="Editar" outcome="/pages/produtoCadastro.xhtml">
+						<f:param name="prodAcao" value="editar" />
+						<f:param name="prodCodigo" value="#{produto.codigo}" />
+					</p:button>
+
+					<p:button value="Excluir" outcome="/pages/produtoCadastro.xhtml">
+						<f:param name="prodAcao" value="excluir" />
+						<f:param name="prodCodigo" value="#{produto.codigo}" />
+					</p:button>
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
 
 </html>

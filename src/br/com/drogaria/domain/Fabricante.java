@@ -30,8 +30,8 @@ public class Fabricante implements Serializable {
 	@Column(name = "fab_codigo")
 	private Long codigo;
 
-	@NotEmpty(message = "O campo descrição é obrigatório.") 
-	@Size(min = 5, max = 50, message = "Tamanho inválido para o campo Descrição. O campo deve conter entre 5 e 50 caracteres.")
+	@NotEmpty(message = "O campo DESCRIÇÃO é obrigatório.") 
+	@Size(min = 5, max = 50, message = "Tamanho inválido para o campo DESCRIÇÃO. O campo deve conter entre 5 e 50 caracteres.")
 	@Column(name = "fab_descricao", length = 50, nullable = false)
 	private String descricao;
 

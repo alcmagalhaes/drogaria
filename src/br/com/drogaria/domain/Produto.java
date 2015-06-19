@@ -14,6 +14,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "tbl_produtos")
@@ -30,12 +38,20 @@ public class Produto implements Serializable {
 	@Column(name = "prd_codigo")
 	private Long codigo;
 
+	@NotEmpty(message = "O campo DESCRIÇÃO é obrigatório.") 
+	@Size(min = 5, max = 50, message = "Tamanho inválido para o campo DESCRIÇÃO. O campo deve conter entre 5 e 50 caracteres.")
 	@Column(name = "prd_descricao", length = 50, nullable = false)
 	private String descricao;
 
+	@NotNull(message = "O campo PREÇO é obrigatório.")
+	@DecimalMin(value = "0.00", message = "Informe um valor maior ou igual à ZERO para o campo PREÇO.")
+	@DecimalMax(value = "99999.99", message = "Informe um valor menor que 100 mil para o campo PREÇO.")
 	@Column(name = "prd_preco", precision = 7, scale = 2, nullable = false)
 	private BigDecimal preco;
 
+	@NotNull(message = "O campo QUANTIDADE é obrigatório.")
+	@Min(value = 0, message = "Informe um valor maior ou igual à ZERO para o campo QUANTIDADE.")
+	@Max(value = 9999, message = "Informe um valor menor que 10 mil para o campo QUANTIDADE.")
 	@Column(name = "prd_quantidade", nullable = false)
 	private Integer quantidade;
 

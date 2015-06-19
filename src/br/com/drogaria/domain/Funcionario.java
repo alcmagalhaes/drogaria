@@ -10,6 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
 @Table(name = "tbl_funcionarios")
@@ -26,15 +30,21 @@ public class Funcionario implements Serializable {
 	@Column(name = "fun_codigo")
 	private Long codigo;
 
+	@NotEmpty(message = "O campo NOME é obrigatório.") 
+	@Size(min = 5, max = 50, message = "Tamanho inválido para o campo NOME. O campo deve conter entre 5 e 50 caracteres.")
 	@Column(name = "fun_nome", length = 50, nullable = false)
 	private String nome;
 
+	@CPF(message = "O CPF informado é inválido.")
 	@Column(name = "fun_cpf", length = 14, nullable = false, unique = true)
 	private String cpf;
 
+	@NotEmpty(message = "O campo SENHA é obrigatório.") 
+	@Size(min = 5, max = 50, message = "Tamanho inválido para o campo SENHA. O campo deve conter entre 6 e 8 caracteres.")
 	@Column(name = "fun_senha", length = 32, nullable = false)
 	private String senha;
 
+	@NotEmpty(message = "O campo FUNÇÃO é obrigatório.") 
 	@Column(name = "fun_funcao", length = 50, nullable = false)
 	private String funcao;
 

@@ -6,48 +6,78 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-	<ui:composition template="/templates/modeloGeral.xhtml">
-		<ui:define name="conteudo">
-	
-			<h:form>
-	
-				<p:toolbar>
-					<f:facet name="left">
-						<h:outputText value="Cadastro de Produto" />
-					</f:facet>
-				</p:toolbar>
-	
-				<h:panelGrid columns="2">
-	
-					<p:outputLabel value="Código: " />
-					<!-- Como nao tem edicao, nao precisa do maxlength -->
-					<p:inputText size="10" readonly="true" />
-	
-					<p:outputLabel value="Descrição: " />
-					<p:inputText size="30" maxlength="50" />
-	
-					<p:outputLabel value="Preço: " />
-					<p:inputText  size="10" maxlength="7"/>
-	
-					<p:outputLabel value="Quantidade: " />
-					<p:inputText  size="10" maxlength="7"/>
-	
-					<p:outputLabel value="Fabricante: " />
-					<p:inputText size="30" maxlength="50" />
-	
-				</h:panelGrid>
-	
-				<h:panelGrid columns="3">
-					<p:commandButton value="Novo" />
-					<p:commandButton value="Salvar"
-						actionListener="#{produtoBean.salvar}" update=":msgGlobal" />
-					<p:commandButton value="Voltar"
-						action="/pages/produtoPesquisa.xhtml?faces-redirect=true" />
-				</h:panelGrid>
-	
-			</h:form>
-	
-		</ui:define>
-	</ui:composition>
+<ui:composition template="/templates/modeloGeral.xhtml">
+
+	<ui:define name="metaData">
+		<f:metadata>
+			<f:viewParam name="prodAcao" value="#{produtoBean.acao}" />
+			<f:viewParam name="prodCodigo" value="#{produtoBean.codigo}" />
+
+			<f:event listener="#{produtoBean.carregarCadastro}"
+				type="preRenderView" />
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="conteudo">
+
+		<h:form id="formProdCad">
+
+			<p:toolbar>
+				<f:facet name="left">
+					<h:outputText value="Cadastro de Produto" />
+				</f:facet>
+			</p:toolbar>
+
+			<h:panelGrid id="pnProdCadDados" columns="2">
+
+				<p:outputLabel value="Código: " />
+				<!-- Como nao tem edicao, nao precisa do maxlength -->
+				<p:inputText size="10" readonly="true"
+					value="#{produtoBean.produtoCadastro.codigo}" />
+				<p:outputLabel value="Descrição: " />
+
+				<p:inputText size="30" maxlength="50"
+					readonly="#{produtoBean.acao == 'excluir'}"
+					value="#{produtoBean.produtoCadastro.descricao}">
+					<f:validateBean />
+				</p:inputText>
+
+				<p:inputText size="20" readonly="#{produtoBean.acao == 'excluir'}"
+					value="#{produtoBean.produtoCadastro.preco}">
+					<f:validateBean />
+				</p:inputText>
+
+				<p:inputText size="20" readonly="#{produtoBean.acao == 'excluir'}"
+					value="#{produtoBean.produtoCadastro.quantidade}">
+					<f:validateBean />
+				</p:inputText>
+
+			</h:panelGrid>
+
+			<h:panelGrid columns="5">
+
+				<p:commandButton value="Novo" actionListener="#{produtoBean.novo}"
+					update=":formProdCad:pnProdCadDados"
+					rendered="#{produtoBean.acao == 'novo'}" />
+
+				<p:commandButton value="Editar"
+					actionListener="#{produtoBean.editar}" update=":msgGlobal"
+					rendered="#{produtoBean.acao == 'editar'}" />
+
+				<p:commandButton value="Excluir"
+					actionListener="#{produtoBean.excluir}" update=":msgGlobal"
+					rendered="#{produtoBean.acao == 'excluir'}" />
+
+				<p:commandButton value="Salvar"
+					actionListener="#{produtoBean.salvar}"
+					update=":msgGlobal :formProdCad:pnProdCadDados"
+					rendered="#{produtoBean.acao == 'novo'}" />
+				<p:button value="Voltar" outcome="/pages/produtoPesquisa.xhtml" />
+
+			</h:panelGrid>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
 
 </html>

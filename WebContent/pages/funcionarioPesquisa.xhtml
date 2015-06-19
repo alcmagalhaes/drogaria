@@ -6,60 +6,70 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-	<ui:composition template="/templates/modeloGeral.xhtml">
-		<ui:define name="conteudo">
-			<h:form>
-	
-				<p:toolbar>
-					<f:facet name="left">
-						<h:outputText value="Listagem de Funcionários" />
-					</f:facet>
-				</p:toolbar>
-	
-				<h:panelGrid columns="6">
-	
-					<p:outputLabel value="Nome: " />
-					<p:inputText size="30" maxlength="50" />
+<ui:composition template="/templates/modeloGeral.xhtml">
 
-					<p:outputLabel value="CPF: " />
-					<p:inputMask mask="999.999.999-99" size="15"/>
-					
-					<p:outputLabel value="Função: " />
-					<p:selectOneMenu >
-						<f:selectItem itemLabel="Selecione uma função"  />
-						<f:selectItem itemLabel="Administrador" />
-						<f:selectItem itemLabel="Balconista" />
-						<f:selectItem itemLabel="Gerente" />
-					</p:selectOneMenu>
-	
-				</h:panelGrid>
-	
-				<h:panelGrid columns="2">
-					<p:commandButton value="Buscar" />
-					<p:button value="Novo" outcome="/pages/funcionarioCadastro.xhtml?faces-redirect=true" />
-				</h:panelGrid>
-	
-	
-				<p:dataTable emptyMessage="Nenhum registro encontrado.">
-	
-					<p:column headerText="Código">
-					</p:column>
-	
-					<p:column headerText="Nome">
-					</p:column>
-	
-					<p:column headerText="CPF">
-					</p:column>
-						
-					<p:column headerText="Função">
-					</p:column>
-						
-					<p:column headerText="Opções">
-					</p:column>
-	
-				</p:dataTable>
-			</h:form>
-		</ui:define>
-	</ui:composition>
+	<ui:define name="metaData">
+		<f:metadata>
+			<f:event listener="#{funcionarioBean.carregarPesquisa}"
+				type="preRenderView" />
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form>
+
+			<p:toolbar>
+				<f:facet name="left">
+					<h:outputText value="Listagem de Funcionários" />
+				</f:facet>
+			</p:toolbar>
+
+			<p:dataTable emptyMessage="Nenhum registro encontrado."
+				value="#{funcionarioBean.funcionarios}"
+				filteredValue="#{funcionarioBean.funcionariosFiltrados}"
+				var="funcionario" rows="10" paginator="true">
+
+				<f:facet name="footer">
+					<p:button value="Novo" outcome="/pages/funcionarioCadastro.xhtml">
+						<f:param name="funcAcao" value="novo" />
+					</p:button>
+				</f:facet>
+
+				<p:column headerText="Código">
+					<h:outputText value="#{funcionario.codigo}" />
+				</p:column>
+
+				<p:column headerText="Nome" filterBy="#{funcionario.nome}"
+					sortBy="#{funcionario.nome}">
+					<h:outputText value="#{funcionario.nome}" />
+				</p:column>
+
+				<p:column headerText="CPF" filterBy="#{funcionario.cpf}"
+					sortBy="#{funcionario.cpf}">
+					<h:outputText value="#{funcionario.cpf}" />
+				</p:column>
+
+				<p:column headerText="Função" filterBy="#{funcionario.funcao}"
+					sortBy="#{funcionario.funcao}">
+					<h:outputText value="#{funcionario.funcao}" />
+				</p:column>
+
+				<p:column headerText="Opções">
+					<p:button value="Editar" outcome="/pages/funcionarioCadastro.xhtml">
+						<f:param name="funcAcao" value="editar" />
+						<f:param name="funcCodigo" value="#{funcionario.codigo}" />
+					</p:button>
+
+					<p:button value="Excluir"
+						outcome="/pages/funcionarioCadastro.xhtml">
+						<f:param name="funcAcao" value="excluir" />
+						<f:param name="funcCodigo" value="#{funcionario.codigo}" />
+					</p:button>
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
 
 </html>
