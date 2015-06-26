@@ -35,7 +35,7 @@
 					</p:button>
 				</f:facet>
 
-				<p:column headerText="Código">
+				<p:column headerText="Código" style="width: 5%">
 					<h:outputText value="#{funcionario.codigo}" />
 				</p:column>
 
@@ -45,16 +45,16 @@
 				</p:column>
 
 				<p:column headerText="CPF" filterBy="#{funcionario.cpf}"
-					sortBy="#{funcionario.cpf}">
+					sortBy="#{funcionario.cpf}"  style="width: 10%">
 					<h:outputText value="#{funcionario.cpf}" />
 				</p:column>
 
 				<p:column headerText="Função" filterBy="#{funcionario.funcao}"
-					sortBy="#{funcionario.funcao}">
+					sortBy="#{funcionario.funcao}" style="width: 12%">
 					<h:outputText value="#{funcionario.funcao}" />
 				</p:column>
 
-				<p:column headerText="Opções">
+				<p:column headerText="Opções" style="width: 9%">
 					<p:button value="Editar" outcome="/pages/funcionarioCadastro.xhtml">
 						<f:param name="funcAcao" value="editar" />
 						<f:param name="funcCodigo" value="#{funcionario.codigo}" />

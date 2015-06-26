@@ -57,8 +57,8 @@ public class ProdutoBean implements Serializable {
 	public void excluir() {
 		try {
 			ProdutoDAO produtoDAO = new ProdutoDAO();
-			produtoDAO.editar(produtoCadastro);
-
+			produtoDAO.excluir(produtoCadastro);
+			
 			// Limpa campos
 			produtoCadastro = new Produto();
 			FacesUtil.addMsgInfo("Produto excluído com sucesso.");
