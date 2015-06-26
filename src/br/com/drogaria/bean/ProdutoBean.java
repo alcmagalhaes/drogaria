@@ -6,7 +6,9 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import br.com.drogaria.dao.FabricanteDAO;
 import br.com.drogaria.dao.ProdutoDAO;
+import br.com.drogaria.domain.Fabricante;
 import br.com.drogaria.domain.Produto;
 import br.com.drogaria.util.FacesUtil;
 
@@ -20,6 +22,7 @@ public class ProdutoBean implements Serializable {
 
 	private List<Produto> produtos;
 	private List<Produto> produtosFiltrados;
+	private List<Fabricante> fabricantes;
 
 	private String acao;
 	private Long codigo;
@@ -88,6 +91,10 @@ public class ProdutoBean implements Serializable {
 			} else {
 				produtoCadastro = new Produto();
 			}
+			
+			FabricanteDAO fabricanteDAO = new FabricanteDAO();
+			fabricantes = fabricanteDAO.listar();
+			
 		} catch (RuntimeException e) {
 			FacesUtil
 					.addMsgError("Ocorreu erro ao tentar obter os dados do Produto."
@@ -119,6 +126,14 @@ public class ProdutoBean implements Serializable {
 		this.produtosFiltrados = produtosFiltrados;
 	}
 
+	public List<Fabricante> getFabricantes() {
+		return fabricantes;
+	}
+	
+	public void setFabricantes(List<Fabricante> fabricantes) {
+		this.fabricantes = fabricantes;
+	}
+	
 	public String getAcao() {
 		return acao;
 	}

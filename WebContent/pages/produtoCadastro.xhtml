@@ -34,23 +34,33 @@
 				<!-- Como nao tem edicao, nao precisa do maxlength -->
 				<p:inputText size="10" readonly="true"
 					value="#{produtoBean.produtoCadastro.codigo}" />
-				<p:outputLabel value="Descrição: " />
 
+				<p:outputLabel value="Descrição: " />
 				<p:inputText size="30" maxlength="50"
 					readonly="#{produtoBean.acao == 'excluir'}"
 					value="#{produtoBean.produtoCadastro.descricao}">
 					<f:validateBean />
 				</p:inputText>
 
+				<p:outputLabel value="Preço: " />
 				<p:inputText size="20" readonly="#{produtoBean.acao == 'excluir'}"
 					value="#{produtoBean.produtoCadastro.preco}">
 					<f:validateBean />
 				</p:inputText>
 
+				<p:outputLabel value="Quantidade: " />
 				<p:inputText size="20" readonly="#{produtoBean.acao == 'excluir'}"
 					value="#{produtoBean.produtoCadastro.quantidade}">
 					<f:validateBean />
 				</p:inputText>
+
+				<p:outputLabel value="Fabricante: " />
+				<p:selectOneMenu value="#{produtoBean.produtoCadastro.fabricante}">
+					<f:selectItem itemLabel="Selecione um fabricante" itemValue="" />
+					<f:selectItems value="#{produtoBean.fabricantes}" var="fabricante"
+						itemLabel="#{fabricante.descricao}" itemValue="#{fabricante}" />
+					<f:validateBean />
+				</p:selectOneMenu>
 
 			</h:panelGrid>
 

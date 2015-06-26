@@ -55,6 +55,7 @@ public class Produto implements Serializable {
 	@Column(name = "prd_quantidade", nullable = false)
 	private Integer quantidade;
 
+	@NotNull(message = "O campo FABRICANTE é obrigatório.")
 	// FechType.EAGER - Carrega produto e fabricante
 	// FechType.LAZY - Carrega o produto
 	@ManyToOne(fetch = FetchType.EAGER)
