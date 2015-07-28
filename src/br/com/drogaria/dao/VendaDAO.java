@@ -11,14 +11,15 @@ import br.com.drogaria.util.HibernateUtil;
 
 public class VendaDAO {
 	
-	public void salvar(Venda venda) {
+	public Long salvar(Venda venda) {
 		
 		Session sessao = HibernateUtil.getSessionFactory().openSession();
 		Transaction transacao = null;
+		Long codigo = null;
 		
 		try {
 			transacao = sessao.beginTransaction();
-			sessao.save(venda);
+			codigo = (Long) sessao.save(venda);
 			transacao.commit();
 		} catch (RuntimeException e) {
 			if (transacao != null) {
@@ -28,6 +29,8 @@ public class VendaDAO {
 		} finally {
 			sessao.close();
 		}
+		
+		return codigo;
 		
 	}
 	
