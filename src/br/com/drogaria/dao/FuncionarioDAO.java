@@ -113,4 +113,24 @@ public class FuncionarioDAO {
 		
 	}
 	
+	public Funcionario autenticar(String cpf, String senha) {
+		
+		Funcionario funcionario = null;
+		Session sessao = HibernateUtil.getSessionFactory().openSession();
+		
+		try {
+			Query consulta = sessao.getNamedQuery("Funcionario.autenticar");
+			consulta.setString("cpf", cpf);
+			consulta.setString("senha", senha);
+			funcionario = (Funcionario) consulta.uniqueResult();
+		} catch (RuntimeException e) {
+			throw e;
+		} finally {
+			sessao.close();
+		}
+		
+		return funcionario;
+		
+	}
+	
 }
