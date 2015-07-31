@@ -6,6 +6,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import br.com.drogaria.dao.FuncionarioDAO;
 import br.com.drogaria.domain.Funcionario;
 import br.com.drogaria.util.FacesUtil;
@@ -27,6 +29,7 @@ public class FuncionarioBean implements Serializable {
 	public void salvar() {
 		try {
 			FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+			funcionarioCadastro.setSenha(DigestUtils.md5Hex(funcionarioCadastro.getSenha()));
 			funcionarioDAO.salvar(funcionarioCadastro);
 
 			// Limpa campos
@@ -42,6 +45,7 @@ public class FuncionarioBean implements Serializable {
 	public void editar() {
 		try {
 			FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+			funcionarioCadastro.setSenha(DigestUtils.md5Hex(funcionarioCadastro.getSenha()));
 			funcionarioDAO.editar(funcionarioCadastro);
 
 			FacesUtil.addMsgInfo("Funcionário alterado com sucesso.");

@@ -49,20 +49,24 @@
 				<p:commandButton value="Novo"
 					actionListener="#{fabricanteBean.novo}"
 					update=":formFabCad:pnFabCadDados"
-					rendered="#{fabricanteBean.acao == 'novo'}" />
+					rendered="#{fabricanteBean.acao == 'novo'
+					and autenticacaoBean.funcionario.funcao != 'Balconista'}" />
 			
 				<p:commandButton value="Editar"
 					actionListener="#{fabricanteBean.editar}" update=":msgGlobal"
-					rendered="#{fabricanteBean.acao == 'editar'}" />
+					rendered="#{fabricanteBean.acao == 'editar'
+					and autenticacaoBean.funcionario.funcao != 'Balconista'}" />
 			
 				<p:commandButton value="Excluir"
 					actionListener="#{fabricanteBean.excluir}" update=":msgGlobal"
-					rendered="#{fabricanteBean.acao == 'excluir'}" />
+					rendered="#{fabricanteBean.acao == 'excluir'
+					and autenticacaoBean.funcionario.funcao != 'Balconista'}" />
 			
 				<p:commandButton value="Salvar"
 					actionListener="#{fabricanteBean.salvar}"
 					update=":msgGlobal :formFabCad:pnFabCadDados"
-					rendered="#{fabricanteBean.acao == 'novo'}" />
+					rendered="#{fabricanteBean.acao == 'novo'
+					and autenticacaoBean.funcionario.funcao != 'Balconista'}" />
 				<p:button value="Voltar" outcome="/pages/fabricantePesquisa.xhtml" />
 			
 			</h:panelGrid>

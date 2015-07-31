@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import br.com.drogaria.dao.FuncionarioDAO;
 import br.com.drogaria.domain.Funcionario;
 import br.com.drogaria.util.FacesUtil;
@@ -21,7 +23,7 @@ public class AutenticacaoBean implements Serializable{
 		try {
 			
 			FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-			funcionario = funcionarioDAO.autenticar(funcionario.getCpf(), funcionario.getSenha());
+			funcionario = funcionarioDAO.autenticar(funcionario.getCpf(), DigestUtils.md5Hex(funcionario.getSenha()));
 			
 			if (funcionario == null) {
 				FacesUtil.addMsgError("CPF e/ou Senha inválidos.");
@@ -38,6 +40,12 @@ public class AutenticacaoBean implements Serializable{
 		}
 	}
 	
+	// Metodos void permanecem na mesma tela
+	// Metodos String retornam para um destino diferente do atual - similar ao outcome no xhtml
+	public String sair() {
+		funcionario = null;
+		return "/pages/autenticacao.xhtml?faces-redirect=true";
+	}
 	
 	public Funcionario getFuncionario() {
 		if (funcionario == null) {

@@ -23,7 +23,7 @@ public class FuncionarioDAOTest {
 			funcionario.setNome("Funcionário " + i);
 			funcionario.setCpf("" + i + i + i + "." + i + i + i + "." + i + i + i + "-" + i + i);
 			funcionario.setSenha("1q2w3e");
-			funcionario.setFuncao("Aspone");
+			funcionario.setFuncao("Balconista");
 			
 			dao.salvar(funcionario);
 			//System.out.println(funcionario);
@@ -80,7 +80,7 @@ public class FuncionarioDAOTest {
 		
 		Funcionario funcionario = dao.buscarPorCodigo(7L);
 
-		funcionario.setFuncao("Chefia");
+		funcionario.setFuncao("Administrador");
 		funcionario.setSenha("8i9o0p");
 		
 		dao.editar(funcionario);
